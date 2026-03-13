@@ -1,8 +1,9 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status
 
+from app.core.deps import get_current_user
 from app.schemas.item import ItemCreate, ItemResponse, ItemUpdate
 
-router = APIRouter(prefix="/items", tags=["items"])
+router = APIRouter(prefix="/items", tags=["items"], dependencies=[Depends(get_current_user)])
 
 # In-memory store (replace with a real DB in production)
 _db: dict[int, dict] = {}
